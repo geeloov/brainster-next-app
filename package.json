@@ -1,0 +1,32 @@
+{
+  "name": "brainster-next-typescript",
+  "description": "[W2L1] TypeScript lab exercises",
+  "version": "1.0.0",
+  "main": "src/main.ts",
+  "scripts": {
+    "lint": "eslint src/**/*.ts",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.11",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-jest": "^27.6.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/deko96/brainster-next-typescript.git"
+  },
+  "author": "Dejan Bozinoski <dejan.bozinoski@intertec.io>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deko96/brainster-next-typescript/issues"
+  },
+  "homepage": "https://github.com/deko96/brainster-next-typescript#readme"
+}
