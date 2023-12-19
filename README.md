@@ -10,6 +10,14 @@ Before running linting and testing commands, make sure to install project depend
 npm install
 ```
 
+## Code Formatting
+
+Code formatting ensures consistent code style and formatting. To run the formatting process, execute the following command in the root directory of the project:
+
+```bash
+npm run format
+```
+
 ## Linting
 
 Linting ensures that the TypeScript code adheres to coding standards and best practices. To run the linting process, execute the following command in the root directory of the project:
