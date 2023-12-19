@@ -26,6 +26,14 @@ Testing verifies the correctness of the exercises by running test cases. To init
 npm run test
 ```
 
+During development, it will be handy to run the tests one by one instead of running the tests for all of the exercises at once. It's a good trade-off for more coding time rather than waiting for the tests to pass.
+
+```bash
+npm run test -- -t "Exercise 01: Sum of multiples"
+```
+
+Valid values for the `-t` argument are the strings that can be found at the beginning of each `index.test.ts` file in the `describe` function.
+
 # Note on Un-Solved Exercises
 
 If you choose not to work on specific exercises or decide to skip them, it is recommended to remove the un-solved exercises from the src directory. This practice helps maintain a focused and organized codebase, making it easier to review and manage your completed work.
