@@ -52,3 +52,30 @@ export async function PATCH(request: NextRequest, context: ApiHandlerContext) {
     );
   }
 }
+
+export const PUT = routeHandler(async (request, context) => {
+  const { surveyId } = context.params;
+  const { name, introduction, manager, status } = await request.json();
+
+  try {
+    const survey = await prisma.survey.update({
+      where: {
+        id: surveyId,
+      },
+      data: {
+        name,
+        introduction,
+        manager,
+        status,
+      },
+    });
+
+    return {
+      data: survey,
+    };
+  } catch (error) {
+    return {
+      error: "Something went wrong while updating the survey.",
+    };
+  }
+});
