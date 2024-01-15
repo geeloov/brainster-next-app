@@ -1,10 +1,10 @@
 import routeHandler from "@/lib/routeHandler";
-import prisma from "@/lib/prisma";
 import Question from "@/schemas/Question";
+import prisma from "@/lib/prisma";
 
 export const POST = routeHandler(async (request, context) => {
   const { surveyId } = context.params;
-  const survey = await prisma.survey.findUniqueOrThrow({
+  const survey = await prisma?.survey.findUniqueOrThrow({
     where: {
       id: surveyId,
     },
@@ -21,6 +21,16 @@ export const POST = routeHandler(async (request, context) => {
   }
 
   const { data } = validation;
+
+  // Find the highest position among existing questions
+  const highestPosition = survey.questions.reduce(
+    (maxPosition, question) => Math.max(maxPosition, question.position),
+    0
+  );
+
+  // Set the position for the new question to be one higher than the highest position
+  const newPosition = highestPosition + 1;
+
   const surveyWithQuestions = await prisma.survey.update({
     where: {
       id: surveyId,
@@ -28,8 +38,8 @@ export const POST = routeHandler(async (request, context) => {
     data: {
       questions: {
         create: {
-          position: survey.questions.length,
           ...data,
+          position: newPosition,
         },
       },
     },
