@@ -21,61 +21,30 @@ export const GET = routeHandler(async (request, context) => {
   return survey;
 });
 
-export async function PATCH(request: NextRequest, context: ApiHandlerContext) {
+export const PATCH = routeHandler(async (request, context) => {
   const { surveyId } = context.params;
   const body = await request.json();
 
-  try {
-    const validation = await Survey.safeParseAsync(body);
-    if (!validation.success) {
-      throw validation.error;
-    }
-    const { data } = validation;
-    const survey = await prisma.survey.update({
-      where: {
-        id: surveyId,
-      },
-      data,
-    });
-
-    return NextResponse.json({
-      data: survey,
-    });
-  } catch (e) {
-    return NextResponse.json(
-      {
-        error: "Something went wrong..",
-      },
-      {
-        status: 500,
-      }
-    );
+  const validation = await Survey.safeParseAsync(body);
+  if (!validation.success) {
+    throw validation.error;
   }
-}
+  const { data } = validation;
+  const survey = await prisma.survey.update({
+    where: {
+      id: surveyId,
+    },
+    data,
+  });
+  return survey;
+});
 
-export const PUT = routeHandler(async (request, context) => {
+export const DELETE = routeHandler(async (_, context) => {
   const { surveyId } = context.params;
-  const { name, introduction, manager, status } = await request.json();
 
-  try {
-    const survey = await prisma.survey.update({
-      where: {
-        id: surveyId,
-      },
-      data: {
-        name,
-        introduction,
-        manager,
-        status,
-      },
-    });
-
-    return {
-      data: survey,
-    };
-  } catch (error) {
-    return {
-      error: "Something went wrong while updating the survey.",
-    };
-  }
+  await prisma.survey.delete({
+    where: {
+      id: surveyId,
+    },
+  });
 });
