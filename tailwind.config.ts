@@ -290,9 +290,4 @@ module.exports = {
     },
   },
   plugins: [],
-<<<<<<< HEAD
-}
-export default config
-=======
 };
->>>>>>> template/master
