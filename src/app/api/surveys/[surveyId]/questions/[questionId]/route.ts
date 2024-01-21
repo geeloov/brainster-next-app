@@ -46,7 +46,7 @@ export const DELETE = routeHandler(async (request, context) => {
   return questions;
 });
 
-export const PUT = routeHandler(async (request, context) => {
+export const PATCH = routeHandler(async (request, context) => {
   const { surveyId, questionId } = context.params;
   const { text, required, position } = await request.json();
 

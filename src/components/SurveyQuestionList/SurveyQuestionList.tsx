@@ -71,6 +71,22 @@ export default function SurveyQuestionList({
     console.log(data);
   };
 
+  const handleQuestionRequiredChange = (questionId: string) => {
+    return async (value: boolean) => {
+      const response = await fetch(
+        `/api/surveys/${surveyId}/questions/${questionId}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({
+            required: value,
+          }),
+        }
+      );
+      const { data } = await response.json();
+      getQuestions();
+    };
+  };
+
   useEffect(() => {
     getQuestions();
   }, [getQuestions]);
@@ -114,7 +130,11 @@ export default function SurveyQuestionList({
               {item.text}
             </div>
             <div className="col-span-1">
-              <Switch />
+              <Switch
+                id={item.id}
+                value={item.required}
+                onChange={handleQuestionRequiredChange(item.id)}
+              />
             </div>
             <div className="col-span-1 flex items-center justify-end">
               <button className="hover:text-primary py-2 px-2 rounded text-lg">

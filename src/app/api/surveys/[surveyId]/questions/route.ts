@@ -50,3 +50,17 @@ export const POST = routeHandler(async (request, context) => {
 
   return surveyWithQuestions;
 });
+
+export const GET = routeHandler(async (_, context) => {
+  const { surveyId } = context.params;
+  const questions = await prisma.question.findMany({
+    where: {
+      surveyId: surveyId,
+    },
+    orderBy: {
+      position: "asc",
+    },
+  });
+
+  return questions;
+});
