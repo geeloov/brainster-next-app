@@ -3,6 +3,7 @@ import Survey from "@/schemas/Survey";
 import routeHandler from "@/lib/routeHandler";
 import { SurveyStatus } from "@prisma/client";
 import keyword_extractor from "keyword-extractor";
+import { revalidatePath } from "next/cache";
 
 export const GET = routeHandler(async (_, context) => {
   const { surveyId } = context.params;
@@ -104,6 +105,9 @@ export const PATCH = routeHandler(async (request, context) => {
       data: questionReportsData,
     });
   }
+
+  revalidatePath("/dashboard/surveys", "page");
+  revalidatePath("/dashboard/surveys/[surveyId]", "page");
   return survey;
 });
 
@@ -115,4 +119,6 @@ export const DELETE = routeHandler(async (_, context) => {
       id: surveyId,
     },
   });
+
+  revalidatePath("/dashboard/surveys");
 });
