@@ -1,5 +1,5 @@
 import SurveyForm from "@/components/SurveyForm/SurveyForm";
-import SurveyQuestionList from "@/components/SurveyQuestionList/SurveyQuestionList";
+import SurveyFormQuestionList from "@/components/SurveyFormQuestionList/SurveyFormQuestionList";
 import { SurveyDTO } from "@/types/SurveyDTO";
 import { SurveyStatus } from "@prisma/client";
 
@@ -39,7 +39,7 @@ export default async function SurveyEditPage({
   return (
     <div className="flex flex-col gap-5">
       <SurveyForm title={title} defaultValues={survey} action={updateSurvey} />
-      <SurveyQuestionList surveyId={surveyId} />
+      <SurveyFormQuestionList surveyId={surveyId} />
     </div>
   );
 }

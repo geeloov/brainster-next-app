@@ -1,6 +1,12 @@
+import { SurveyDTO } from "@/types/SurveyDTO";
 import React from "react";
 
-export default function PublicSurveyLayout({
+const getSurvey = async (id: string): Promise<SurveyDTO> => {
+  const response = await fetch(`${process.env.API_URL}/surveys/${id}`);
+  return response.json();
+};
+
+export default async function PublicSurveyLayout({
   children,
 }: {
   children: React.ReactNode;

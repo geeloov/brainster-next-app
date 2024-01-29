@@ -9,17 +9,16 @@ import {
   Store,
 } from "react-sortablejs";
 import Switch from "../Switch/Switch";
-// import { questions as mockQuestions } from "@/_mocks/questions";
 import { QuestionsDTO } from "@/types/QuestionDTO";
 import { debounce, isNumber, noop } from "lodash";
 
-interface SurveyQuestionListProps {
+interface SurveyFormQuestionListProps {
   surveyId: string;
 }
 
-export default function SurveyQuestionList({
+export default function SurveyFormQuestionList({
   surveyId,
-}: SurveyQuestionListProps) {
+}: SurveyFormQuestionListProps) {
   const [questions, setQuestions] = useState<QuestionsDTO["data"]>([]);
 
   const getQuestions = useCallback(async () => {
