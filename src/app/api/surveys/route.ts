@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import SurveySchema from "@/schemas/Survey";
 import routeHandler from "@/lib/routeHandler";
+import { revalidatePath } from "next/cache";
 
 export const GET = routeHandler(async () => {
   const surveys = await prisma.survey.findMany({});
@@ -20,6 +21,8 @@ export const POST = routeHandler(async (request) => {
   const survey = await prisma.survey.create({
     data,
   });
+
+  revalidatePath("/dashboard/surveys", "page");
 
   return survey;
 });

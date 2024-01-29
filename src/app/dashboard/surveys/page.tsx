@@ -1,4 +1,5 @@
 import { SurveyListDTO } from "@/types/SurveyListDTO";
+import { revalidatePath } from "next/cache";
 import Link from "next/link";
 
 const getSurveys = async (): Promise<SurveyListDTO> => {
@@ -21,6 +22,7 @@ export default async function SurveysPage() {
     "use server";
     const id = formData.get("id") as string;
     await deleteSurvey(id);
+    revalidatePath("/dashboard/surveys");
   };
 
   return (
@@ -97,7 +99,7 @@ export default async function SurveysPage() {
                         />
                       </svg>
                     </Link>
-                    <form action={handleDeleteSurvey}>
+                    <form action={handleDeleteSurvey} className="flex">
                       <input type="hidden" name="id" value={survey.id} />
                       <button type="submit" className="hover:text-primary">
                         <svg

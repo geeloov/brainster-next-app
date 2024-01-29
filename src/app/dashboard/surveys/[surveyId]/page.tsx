@@ -38,11 +38,7 @@ export default async function SurveyEditPage({
 
   return (
     <div className="flex flex-col gap-5">
-      <SurveyForm
-        title={title}
-        defaultValues={survey}
-        updateSurvey={updateSurvey}
-      />
+      <SurveyForm title={title} defaultValues={survey} action={updateSurvey} />
       <SurveyQuestionList surveyId={surveyId} />
     </div>
   );

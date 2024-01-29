@@ -1,12 +1,12 @@
 "use client";
 
 import { SurveyDTO } from "@/types/SurveyDTO";
-import { FormEventHandler, useMemo } from "react";
+import { useMemo } from "react";
 
 interface SurveyFormProps {
   title: string;
   defaultValues?: SurveyDTO["data"];
-  updateSurvey: (formData: FormData) => void;
+  action: (formData: FormData) => void;
 }
 
 export default function SurveyForm(props: SurveyFormProps) {
@@ -21,7 +21,7 @@ export default function SurveyForm(props: SurveyFormProps) {
           {props.title}
         </h3>
       </div>
-      <form action={props.updateSurvey}>
+      <form action={props.action}>
         <div className="p-6.5">
           <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
             <div className="w-full xl:w-1/2">
