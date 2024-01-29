@@ -2,12 +2,7 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { FaClone, FaTrash } from "react-icons/fa";
 import { IoReorderThreeSharp } from "react-icons/io5";
-import {
-  ReactSortable,
-  Sortable,
-  SortableEvent,
-  Store,
-} from "react-sortablejs";
+import { ReactSortable, SortableEvent } from "react-sortablejs";
 import Switch from "../Switch/Switch";
 import { QuestionsDTO } from "@/types/QuestionDTO";
 import { debounce, isNumber, noop } from "lodash";
@@ -67,7 +62,6 @@ export default function SurveyFormQuestionList({
       }
     );
     const { data } = await response.json();
-    console.log(data);
   };
 
   useEffect(() => {
