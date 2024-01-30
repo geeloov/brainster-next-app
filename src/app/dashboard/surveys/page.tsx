@@ -4,8 +4,14 @@ import Link from "next/link";
 
 const getSurveys = async (): Promise<SurveyListDTO> => {
   "use server";
-  const response = await fetch(`${process.env.API_URL}/surveys`);
-  return response.json();
+  try {
+    const response = await fetch(`${process.env.API_URL}/surveys`);
+    return response.json();
+  } catch (e) {
+    return {
+      data: [],
+    };
+  }
 };
 
 const deleteSurvey = async (id: string): Promise<void> => {
@@ -13,8 +19,6 @@ const deleteSurvey = async (id: string): Promise<void> => {
   const response = await fetch(`${process.env.API_URL}/surveys/${id}`, {
     method: "DELETE",
   });
-
-  return response.json();
 };
 
 export default async function SurveysPage() {
