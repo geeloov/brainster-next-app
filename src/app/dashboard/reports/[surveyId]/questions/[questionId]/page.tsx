@@ -1,6 +1,7 @@
 import React from "react";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
+import SentimentScoreMeter from "@/components/SentimentScoreMeter/SentimentScoreMeter";
 
 interface SurveyQuestionReportPageProps {
   params: {
@@ -14,6 +15,9 @@ const getQuestion = async (surveyId: string, questionId: string) => {
     where: {
       id: questionId,
       surveyId,
+    },
+    include: {
+      report: true,
     },
   });
 
@@ -38,6 +42,8 @@ export default async function SurveyQuestionReportPage({
 }: SurveyQuestionReportPageProps) {
   const question = await getQuestion(params.surveyId, params.questionId);
   const answers = await getQuestionData(params.surveyId, params.questionId);
+
+  const keywords = (question.report?.keywords || []).splice(0, 10);
 
   return (
     <div className="container">
@@ -83,28 +89,36 @@ export default async function SurveyQuestionReportPage({
             >
               Back to questions list
             </Link>
-            <div>speedometer</div>
-            <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-              <table className="w-full table-auto">
-                <tbody>
-                  <tr>
-                    <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                      Keyword 1
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                      Keyword 2
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                      Keyword 3
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            {question.report ? (
+              <div className="border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                <h6 className="border-b border-[#eee] dark:border-strokedark p-3 text-center font-medium text-black dark:text-white">
+                  Sentiment score
+                </h6>
+                <SentimentScoreMeter value={question.report.sentimentScore} />
+              </div>
+            ) : null}
+            {keywords.length ? (
+              <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                <table className="w-full table-auto">
+                  <thead>
+                    <tr>
+                      <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white border-b border-[#eee]">
+                        Keywords
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {keywords.map((keyword) => (
+                      <tr key={keyword}>
+                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark xl:pl-11">
+                          {keyword}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
