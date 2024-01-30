@@ -8,18 +8,16 @@ const getQuestionsForSurvey = async (surveyId: string) => {
       surveyId,
     },
     include: {
+      report: true,
       answers: true,
     },
   });
 
-  const data = questions.map(({ id, text, answers }) => ({
+  const data = questions.map(({ id, text, answers, report }) => ({
     id,
     text,
     answersCount: answers.length,
-    avgSentimentScore: answers.reduce((acc, answer) => {
-      const score = answer.sentimentScore || 0;
-      return (acc + score) / answers.length;
-    }, 0),
+    score: report?.sentimentScore,
   }));
 
   return data;
@@ -66,7 +64,7 @@ export default async function SurveyQuestionsPage({
                   {question.answersCount}
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                  {question.avgSentimentScore}
+                  {question.score || "N/A"}
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <Link
