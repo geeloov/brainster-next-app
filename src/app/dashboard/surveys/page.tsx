@@ -3,11 +3,13 @@ import { revalidatePath } from "next/cache";
 import Link from "next/link";
 
 const getSurveys = async (): Promise<SurveyListDTO> => {
+  "use server";
   const response = await fetch(`${process.env.API_URL}/surveys`);
   return response.json();
 };
 
 const deleteSurvey = async (id: string): Promise<void> => {
+  "use server";
   const response = await fetch(`${process.env.API_URL}/surveys/${id}`, {
     method: "DELETE",
   });
