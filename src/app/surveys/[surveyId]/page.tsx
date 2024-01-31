@@ -2,17 +2,25 @@ import { QuestionsDTO } from "@/types/QuestionDTO";
 import { SurveyDTO } from "@/types/SurveyDTO";
 import Image from "next/image";
 import Link from "next/link";
+import prisma from "@/lib/prisma";
 
-const getSurvey = async (id: string): Promise<SurveyDTO> => {
-  const response = await fetch(`${process.env.API_URL}/surveys/${id}`);
-  return response.json();
+const getSurvey = async (id: string) => {
+  return prisma.survey.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
 };
 
-const getQuestions = async (surveyId: string): Promise<QuestionsDTO> => {
-  const response = await fetch(
-    `${process.env.API_URL}/surveys/${surveyId}/questions`
-  );
-  return response.json();
+const getQuestions = async (surveyId: string) => {
+  return prisma.question.findMany({
+    where: {
+      surveyId: surveyId,
+    },
+    orderBy: {
+      position: "asc",
+    },
+  });
 };
 
 interface PublicSurveysPageProps {
@@ -24,8 +32,8 @@ interface PublicSurveysPageProps {
 export default async function PublicSurveysPage({
   params,
 }: PublicSurveysPageProps) {
-  const { data: survey } = await getSurvey(params.surveyId);
-  const { data: questions } = await getQuestions(params.surveyId);
+  const survey = await getSurvey(params.surveyId);
+  const questions = await getQuestions(params.surveyId);
 
   const [firstQuestion] = questions;
   const startUrl = [

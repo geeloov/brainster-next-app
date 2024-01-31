@@ -2,10 +2,14 @@ import SurveyForm from "@/components/SurveyForm/SurveyForm";
 import SurveyFormQuestionList from "@/components/SurveyFormQuestionList/SurveyFormQuestionList";
 import { SurveyDTO } from "@/types/SurveyDTO";
 import { SurveyStatus } from "@prisma/client";
+import prisma from "@/lib/prisma";
 
-const getSurveyById = async (id: string): Promise<SurveyDTO> => {
-  const response = await fetch(`${process.env.API_URL}/surveys/${id}`);
-  return response.json();
+const getSurveyById = async (id: string) => {
+  return prisma.survey.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
 };
 
 type SurveyEditPageParams = {
@@ -17,7 +21,7 @@ type SurveyEditPageParams = {
 export default async function SurveyEditPage({
   params: { surveyId },
 }: SurveyEditPageParams) {
-  const { data: survey } = await getSurveyById(surveyId);
+  const survey = await getSurveyById(surveyId);
   const title = ["Editing survey", survey.name].join(" ");
 
   const updateSurvey = async (formData: FormData) => {
@@ -29,11 +33,10 @@ export default async function SurveyEditPage({
       status: formData.get("status") as SurveyStatus,
     };
 
-    const response = await fetch(`${process.env.API_URL}/surveys/${surveyId}`, {
+    await fetch(`${process.env.API_URL}/surveys/${surveyId}`, {
       method: "PATCH",
       body: JSON.stringify(data),
     });
-    const jsonData = await response.json();
   };
 
   return (
