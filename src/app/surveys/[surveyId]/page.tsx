@@ -1,5 +1,3 @@
-import { QuestionsDTO } from "@/types/QuestionDTO";
-import { SurveyDTO } from "@/types/SurveyDTO";
 import Image from "next/image";
 import Link from "next/link";
 import prisma from "@/lib/prisma";

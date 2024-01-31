@@ -6,7 +6,7 @@ const Survey = z.object({
   introduction: z.string().optional(),
   manager: z.string().email(),
   status: z.nativeEnum(SurveyStatus).default(SurveyStatus.DRAFT),
-  endsAt: z.date(),
+  // endsAt: z.date(),
 });
 
 export default Survey;
