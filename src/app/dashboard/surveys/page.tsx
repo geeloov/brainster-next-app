@@ -1,28 +1,19 @@
-import { SurveyListDTO } from "@/types/SurveyListDTO";
+import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
 
-const getSurveys = async (): Promise<SurveyListDTO> => {
-  "use server";
-  try {
-    const response = await fetch(`${process.env.API_URL}/surveys`);
-    return response.json();
-  } catch (e) {
-    return {
-      data: [],
-    };
-  }
+const getSurveys = async () => {
+  return prisma.survey.findMany({});
 };
 
-const deleteSurvey = async (id: string): Promise<void> => {
-  "use server";
-  const response = await fetch(`${process.env.API_URL}/surveys/${id}`, {
-    method: "DELETE",
+const deleteSurvey = async (id: string) => {
+  return prisma.survey.delete({
+    where: { id },
   });
 };
 
 export default async function SurveysPage() {
-  const { data: surveys } = await getSurveys();
+  const surveys = await getSurveys();
 
   const handleDeleteSurvey = async (formData: FormData) => {
     "use server";
