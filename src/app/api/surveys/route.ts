@@ -6,8 +6,8 @@ import nodemailer from "@/lib/nodemailer";
 import { Survey } from "@prisma/client";
 
 const getSurveyEmailTemplateHtml = (survey: Survey) => {
-  const surveyUrl = `http://localhost:3000/surveys/${survey.id}`;
-  const reportsUrl = `http://localhost:3000/dashboard/reports/${survey.id}`;
+  const surveyUrl = `${process.env.APP_URL}/surveys/${survey.id}`;
+  const reportsUrl = `${process.env.APP_URL}/dashboard/reports/${survey.id}`;
 
   return `<p>You've been invited to participate in our survey "${survey.name}".</p>
   Survey link: <a href="${surveyUrl}">${surveyUrl}</a><br />

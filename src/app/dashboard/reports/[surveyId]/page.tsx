@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import { HiOutlineDocumentReport } from "react-icons/hi";
+import { FaMagnifyingGlassChart } from "react-icons/fa6";
 
 const getQuestionsForSurvey = async (surveyId: string) => {
   const questions = await prisma.question.findMany({
@@ -69,8 +69,9 @@ export default async function SurveyQuestionsPage({
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <Link
                     href={`/dashboard/reports/${params.surveyId}/questions/${question.id}`}
+                    className="hover:text-primary"
                   >
-                    <HiOutlineDocumentReport />
+                    <FaMagnifyingGlassChart />
                   </Link>
                 </td>
               </tr>
