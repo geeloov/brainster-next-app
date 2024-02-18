@@ -1,11 +1,19 @@
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import Survey from "@/schemas/Survey";
 import routeHandler from "@/lib/routeHandler";
 import { SurveyStatus } from "@prisma/client";
 import keyword_extractor from "keyword-extractor";
 import { revalidatePath } from "next/cache";
 
-export const GET = routeHandler(async (_, context) => {
+type ApiHandlerContext = {
+  params: {
+    surveyId: string;
+  };
+};
+
+export const GET = routeHandler(async (request, context) => {
   const { surveyId } = context.params;
   const survey = await prisma.survey.findUniqueOrThrow({
     where: {
