@@ -35,21 +35,21 @@ export default async function SurveyQuestionsPage({
   const questions = await getQuestionsForSurvey(params.surveyId);
 
   return (
-    <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="max-w-full overflow-x-auto">
-        <table className="w-full table-auto">
-          <thead>
-            <tr className="bg-gray-2 text-left dark:bg-meta-4">
-              <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+    <div className="rounded-[20px] rounded-t-md border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="max-w-full overflow-x-auto rounded-lg">
+        <table className="w-full table-auto rounded-[20px] rounded-t-md">
+          <thead className="rounded-[10px]" >
+            <tr className="bg-primary text-left text-white dark:bg-meta-4 rounded-[30px]">
+              <th className="min-w-[220px] py-4 px-4 font-medium text-white dark:text-white xl:pl-11">
                 Question
               </th>
-              <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+              <th className="min-w-[150px] py-4 px-4 font-medium text-white dark:text-white">
                 Answers
               </th>
-              <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+              <th className="min-w-[120px] py-4 px-4 font-medium text-white dark:text-white">
                 Sentiment score
               </th>
-              <th className="py-4 px-4 font-medium text-black dark:text-white">
+              <th className="py-4 px-4 font-medium text-white dark:text-white">
                 Actions
               </th>
             </tr>

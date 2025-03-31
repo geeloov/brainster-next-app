@@ -4,6 +4,7 @@ import { SurveyStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+
 const createSurvey = async (formData: FormData): Promise<SurveyDTO> => {
   const data: Partial<SurveyDTO["data"]> = {
     name: formData.get("name") as string,
@@ -20,16 +21,16 @@ const createSurvey = async (formData: FormData): Promise<SurveyDTO> => {
   return response.json();
 };
 
-export default async function SurveyCreatePage() {
-  const handleCreateSurvey = async (formData: FormData) => {
-    "use server";
-    const { data } = await createSurvey(formData);
-    revalidatePath("/dashboard/surveys");
-    redirect("/dashboard/surveys/" + data.id);
-  };
+// export default async function SurveyCreatePage() {
+//   const handleCreateSurvey = async (formData: FormData) => {
+//     "use server";
+//     const { data } = await createSurvey(formData);
+//     revalidatePath("/dashboard/surveys");
+//     redirect("/dashboard/surveys/" + data.id);
+//   };
 
-  return <SurveyForm title="Create a Survey" action={handleCreateSurvey} />;
-import { redirect } from "next/navigation";
+//   return <SurveyForm title="Create a Survey" surveyAction={handleCreateSurvey} />;
+// }
 export default async function SurveyCreatePage() {
   const createSurvey = async (formData: FormData) => {
     "use server";
@@ -48,5 +49,5 @@ export default async function SurveyCreatePage() {
     return redirect(`/dashboard/surveys/${survey.id}`);
   };
 
-  return <SurveyForm title="Create a Survey" surveyAction={createSurvey} />;
+  return <SurveyForm title="Create a Survey" edit="Create" surveyAction={createSurvey} />;
 }

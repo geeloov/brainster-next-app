@@ -43,12 +43,12 @@ export default async function PublicSurveysPage({
 
   return (
     <div className="container mx-auto my-6 flex items-center flex-col gap-6">
-      <Image
-        width={32}
-        height={32}
-        src={"/images/logo/logo-icon.svg"}
-        alt="Logo"
-      />
+      <div className="text-4xl">
+        <h1>
+          Survey<span className="text-[#0159C9]">Up</span>
+          <span>!</span>
+        </h1>
+      </div>
       <div className="bg-white rounded-md py-6 text-center w-full drop-shadow-1">
         {survey.introduction}
       </div>

@@ -22,7 +22,8 @@ export default async function SurveyEditPage({
   params: { surveyId },
 }: SurveyEditPageParams) {
   const survey = await getSurveyById(surveyId);
-  const title = ["Editing survey", survey.name].join(" ");
+  const title = ["Edit", survey.name].join(" ");
+  const edit = "Edit"
 
   const updateSurvey = async (formData: FormData) => {
     "use server";
@@ -39,14 +40,16 @@ export default async function SurveyEditPage({
     });
   };
 
+
   return (
     <div className="flex flex-col gap-5">
       <SurveyForm
+      edit={edit}
         title={title}
         defaultValues={survey}
         surveyAction={updateSurvey}
       />
-      <SurveyQuestionList surveyId={surveyId} />
+      <SurveyFormQuestionList surveyId={surveyId} />
     </div>
   );
 }

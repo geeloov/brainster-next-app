@@ -1,35 +1,38 @@
 "use client";
 import { useState } from "react";
 
-interface SwitchProps {
-  id: string;
-  value: boolean;
-  onChange: (value: boolean) => void;
-}
+let globalId = 0;
+export default function Switch() {
+  const [enabled, setEnabled] = useState(false);
 
-export default function Switch({ id, value, onChange }: SwitchProps) {
+// Function to get the next ID
+function getNextId() {
+  globalId += 1;
+  return globalId;
+}
+const [componentId] = useState(() => `auto-increment-id-${getNextId()}`);
   return (
     <div>
       <label
-        htmlFor={"question-" + id}
+        htmlFor={componentId}
         className="flex cursor-pointer select-none items-center"
       >
         <div className="relative">
           <input
             type="checkbox"
-            name={"question-" + id}
-            id={"question-" + id}
+            id={componentId}
             className="sr-only"
-            onChange={() => onChange(!value)}
-            value={Number(value)}
+            onChange={() => {
+              setEnabled(!enabled);
+            }}
           />
           <div className="block h-8 w-14 rounded-full bg-meta-9 dark:bg-[#5A616B]"></div>
           <div
             className={`dot absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white transition ${
-              value && "!right-1 !translate-x-full !bg-primary dark:!bg-white"
+              enabled && "!right-1 !translate-x-full !bg-primary dark:!bg-white"
             }`}
           >
-            <span className={`hidden ${value && "!block"}`}>
+            <span className={`hidden ${enabled && "!block"}`}>
               <svg
                 className="fill-white dark:fill-black"
                 width="11"
@@ -46,7 +49,7 @@ export default function Switch({ id, value, onChange }: SwitchProps) {
                 ></path>
               </svg>
             </span>
-            <span className={`${value && "hidden"}`}>
+            <span className={`${enabled && "hidden"}`}>
               <svg
                 className="h-4 w-4 stroke-current"
                 fill="none"
